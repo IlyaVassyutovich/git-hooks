@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+
+echo "<< pre-push hook, bash-2.0"
+
+remote="$1"
+url="$2"
+while read local_ref local_sha remote_ref remote_sha
+do
+	HOOK_DIR=$(dirname -- "${BASH_SOURCE[0]}")
+	/usr/bin/env pwsh \
+		-NoLogo \
+		-NoProfile \
+		-NonInteractive \
+		-File $HOOK_DIR/pre-push.ps1 \
+			-RemoteName $remote -PushUri $url \
+			-LocalRef $local_ref -LocalSha $local_sha \
+			-RemoteRef $remote_ref -RemoteSha $remote_sha
+	exit $?
+done
+
+exit 0
