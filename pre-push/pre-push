@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-echo "<< pre-push hook, bash-2.0"
+echo "<< pre-push composite-hook, bash-2.1"
 
 remote="$1"
 url="$2"
@@ -13,6 +13,7 @@ do
 		-NoProfile \
 		-NonInteractive \
 		-File $HOOK_DIR/pre-push.ps1 \
+			-HookDir $HOOK_DIR \
 			-RemoteName $remote -PushUri $url \
 			-LocalRef $local_ref -LocalSha $local_sha \
 			-RemoteRef $remote_ref -RemoteSha $remote_sha

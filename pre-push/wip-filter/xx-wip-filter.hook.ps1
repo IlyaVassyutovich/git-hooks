@@ -26,9 +26,10 @@ param (
 )
 
 $DebugPreference = "SilentlyContinue"
+$ErrorActionPreference = "Stop"
 
-Write-Host "<< pre-push hook, ps-2.2"
-Write-Debug "Begin pre-push hook"
+Write-Host "<< wip-filter, ps-2.5"
+Write-Debug "Begin wip-filter hook"
 
 $SuppliedParams = @{
 	RemoteName = $RemoteName;
@@ -67,8 +68,7 @@ else {
 		$ForbiddenCommit = (git rev-list --max-count=1 --grep "^!" "$Range")
 		if ($null -ne $ForbiddenCommit) {
 			Write-Debug "Forbidden commit detected"
-			Write-Error "Push rejected for commit `"$ForbiddenCommit`""
-			Write-Debug "End pre-push hook"
+			Write-Warning "<< Push rejected for commit `"$ForbiddenCommit`"."
 			$HookExitCode = 13
 		}
 		else {
@@ -80,5 +80,5 @@ else {
 	}
 }
 
-Write-Debug "End pre-push hook"
+Write-Debug "End wip-filter hook"
 exit $HookExitCode
