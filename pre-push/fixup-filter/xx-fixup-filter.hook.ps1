@@ -28,8 +28,8 @@ param (
 $DebugPreference = "SilentlyContinue"
 $ErrorActionPreference = "Stop"
 
-Write-Host "<< wip-filter, ps-3.1"
-Write-Debug "Begin wip-filter hook"
+Write-Host "<< fixup-filter, ps-1.1"
+Write-Debug "Begin fixup-filter hook"
 
 . (Join-Path $PSScriptRoot "./lib/Check-CommitMessage.ps1")
 
@@ -52,7 +52,7 @@ $HookExitCode, $ForbiddenCommitSHA = Check-CommitMessage `
 	-RemoteRef $RemoteRef `
 	-RemoteSha $RemoteSha `
 	-LocalSha $LocalSha `
-	-MessageRegex "^!"
+	-MessageRegex "^fixup!"
 if ($null -ne $ForbiddenCommitSHA) {
 	Write-Host `
 		-ForegroundColor Red `
@@ -60,5 +60,5 @@ if ($null -ne $ForbiddenCommitSHA) {
 }
 
 
-Write-Debug "End wip-filter hook"
+Write-Debug "End fixup-filter hook"
 exit $HookExitCode
